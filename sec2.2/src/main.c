@@ -8,6 +8,12 @@
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
 
+#ifdef CONFIG_SUM_PRINT
+#include "sum_printk.h"
+#elif defined(CONFIG_SUM_LOG)
+#include "sum_log.h"
+#endif
+
 /* 1000 msec = 1 sec */
 #define SLEEP_TIME_MS   2000
 
@@ -24,6 +30,9 @@ int main(void)
 {
 	int ret;
 	bool led_state = true;
+
+	int result = sum(10, 20);
+	(void)result;
 
 	if (!gpio_is_ready_dt(&led)) {
 		return 0;
